@@ -12,6 +12,10 @@ import com.sercangedik.bubbleStraggle.managers.BallManager;
 import com.sercangedik.bubbleStraggle.managers.GameManager;
 
 public class Player {
+	public static int MOVE_LEFT = -1;
+	public static int MOVE_RIGHT = 1;
+	public static int STAND = 0;
+	
 	protected Animation _animation;
 	protected TextureRegion[][] _frames;
 	protected int _width;
@@ -19,9 +23,9 @@ public class Player {
 	protected Texture _texture;
 	protected Vector2 _position;
 	protected float _moveSpeed;
+	protected int _direction = STAND;
 	
-	public static int MOVE_LEFT = -1;
-	public static int MOVE_RIGHT = 1;
+	
 	
 	public Player(FileHandle fileHandle) {
 		this(fileHandle,0,0);
@@ -72,6 +76,7 @@ public class Player {
 	
 	public void move(int direction) {
 		_position.x += _moveSpeed * GameManager.getDelta() * direction;
+		_direction = direction;
 	}
 	
 	public TextureRegion getCurrentFrame() {
@@ -90,9 +95,17 @@ public class Player {
 		
 		if(Gdx.input.isKeyPressed(Keys.A)){
 			move(Player.MOVE_LEFT);
+			_animation = new Animation(0.10f, _frames[1]);
 		}
 		else if(Gdx.input.isKeyPressed(Keys.D)){
 			move(Player.MOVE_RIGHT);
+			_animation = new Animation(0.10f, _frames[2]);
+		}
+		else {
+			if(_direction != STAND)
+				_animation = new Animation(0.10f, _frames[0]);
+			
+			_direction = STAND;
 		}
 		
 		batch.draw(getCurrentFrame(), getPosition().x, getPosition().y);
