@@ -16,14 +16,15 @@ public class Ball {
 	private float _restitution;
 	private Body _body;
 	private BodyDef _bodyDef = new BodyDef();
-	private CircleShape _shape = new CircleShape();
+	private CircleShape _shape;
+	private boolean _isCreated = false;
 	
 	public Ball(int level) {
 		this(level,0,0,1.0f,new Vector2(0.0f,0.0f));
 	}
 	
 	public Ball(int level, Vector2 position) {
-		this(level,0,0,1.0f,new Vector2(0.0f,0.0f));
+		this(level,0,0,1.0f,position);
 	}
 	
 	public Ball(int level, float density, float friction, float restitution, Vector2 position) {
@@ -32,6 +33,11 @@ public class Ball {
 		setFriction(friction);
 		setRestitution(restitution);
 		setPosition(position);
+	}
+	
+	protected void createShape() {
+		_shape = new CircleShape();
+		_shape.setRadius(_level*10.0f/2);
 	}
 	
 	public Body getBody() {
@@ -67,12 +73,8 @@ public class Ball {
 		return _shape;
 	}
 
-	public void setShape(CircleShape shape) {
-		this._shape = shape;
-	}
-
 	public Vector2 getPosition() {
-		return _position;
+		return _body.getPosition();
 	}
 
 	public void setPosition(float x, float y) {
@@ -90,6 +92,7 @@ public class Ball {
 
 	public void setLevel(int level) {
 		this._level = level;
+		createShape();
 	}
 	
 	public void create() {
@@ -98,8 +101,6 @@ public class Ball {
 		_bodyDef.position.set(_position);
 		_body = WorldManager.world.createBody(_bodyDef);
 		
-		_shape.setRadius(_level*1.0f/2);
-
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = _shape;
 		fixtureDef.density = _density; 
@@ -107,10 +108,12 @@ public class Ball {
 		fixtureDef.restitution = _restitution;
 		
 		_body.createFixture(fixtureDef);
+		
+		_isCreated = true;
 	}
 	
-	public void refresh(boolean isCreated) {
-		if(!isCreated)
+	public void refresh() {
+		if(!_isCreated)
 			create();
 		
 		_shape.dispose();

@@ -13,11 +13,13 @@ public final class BallManager {
 	public static void createBalls(int count,int level) {
 		Ball ball;
 		float positionStep = Gdx.graphics.getWidth() / (count+1);
-		Vector2 position = new Vector2(positionStep, 50.0f);
+		float positionX = 0;
 		
 		for (int i = 0; i < count; i++) {
+			positionX += positionStep;
+			Vector2 position = new Vector2(positionX, Gdx.graphics.getHeight() - 50);
+			
 			ball = new Ball(level, position);
-			position.x += positionStep;
 			
 			addBall(ball);
 		}
@@ -28,6 +30,7 @@ public final class BallManager {
 	}
 	
 	public static void removeBall(Ball ball) {
+		WorldManager.world.destroyBody(ball.getBody());
 		balls.remove(ball);
 	}
 	
@@ -35,8 +38,14 @@ public final class BallManager {
 		balls = new ArrayList<Ball>();
 	}
 	
-	public void shoot(Ball ball) throws CloneNotSupportedException {
-		int level = ball.getLevel() / 2;
+	public static void shoot(Ball ball) throws CloneNotSupportedException {
+		if(ball.getLevel() == 1) {
+			removeBall(ball);
+			
+			return;
+		}
+		
+		int level = ball.getLevel() - 1;
 		float density = ball.getDensity();
 		float friction = ball.getFriction();
 		float restitution = ball.getRestitution();
@@ -45,15 +54,21 @@ public final class BallManager {
 		Ball ball1 = new Ball(level, density, friction, restitution, position);
 		Ball ball2 = new Ball(level, density, friction, restitution, position);
 		
-		//@TODO: add force
-		
 		addBall(ball1);
 		addBall(ball2);
 		
-		ball1.refresh(false);
-		ball2.refresh(false);
+		ball1.refresh();
+		ball2.refresh();
 		
-		WorldManager.world.destroyBody(ball.getBody());
+		ball1.getBody().applyLinearImpulse(-10.0f, 10.0f, 0, 0, true);
+		ball2.getBody().applyLinearImpulse(10.0f, 10.0f, 0, 0, true);
+		
 		removeBall(ball);
+	}
+	
+	public static void refreshBalls() {
+		for (Ball ball : balls) {
+			ball.refresh();
+		}
 	}
 }
