@@ -18,14 +18,13 @@ public class BubbleStraggle extends ApplicationAdapter {
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		
+
 		//BUG
 		World a = WorldManager.world;
 		WorldManager.createWall(WorldManager.BOTTOM_WALL_X,WorldManager.BOTTOM_WALL_Y,WorldManager.BOTTOM_WALL_WIDTH,WorldManager.BOTTOM_WALL_HEIGHT);
 		WorldManager.createWall(WorldManager.LEFT_WALL_X,WorldManager.LEFT_WALL_Y,WorldManager.LEFT_WALL_WIDTH,WorldManager.LEFT_WALL_HEIGHT);
 		WorldManager.createWall(WorldManager.RIGHT_WALL_X,WorldManager.RIGHT_WALL_Y,WorldManager.RIGHT_WALL_WIDTH,WorldManager.RIGHT_WALL_HEIGHT);
-		
-		BallManager.createBalls(4, 3);
+		BallManager.createBalls(1, 3);
 		BallManager.refreshBalls();
 		
 		debugRenderer = new Box2DDebugRenderer();
@@ -40,8 +39,11 @@ public class BubbleStraggle extends ApplicationAdapter {
 		debugRenderer.render(WorldManager.world, WorldManager.getCamera().combined);
 		
 		batch.begin();
+		//GameManager.setTextures(batch);
 		GameManager.getPlayer().controlHandler(batch);
 		GameManager.getBullet().controlHandler(batch);
 		batch.end();
+		
+		WorldManager.world.step(1/60f, 6, 2);
 	}
 }

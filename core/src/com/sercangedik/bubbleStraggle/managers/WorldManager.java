@@ -13,7 +13,7 @@ public final class WorldManager {
 	
 	
 	public static float BOTTOM_WALL_X = 0.0f;
-	public static float BOTTOM_WALL_HEIGHT = 10.0f;
+	public static float BOTTOM_WALL_HEIGHT = 30.0f;
 	public static float BOTTOM_WALL_WIDTH = WorldManager.getCamera().viewportWidth;
 	public static float BOTTOM_WALL_Y = BOTTOM_WALL_HEIGHT;
 	

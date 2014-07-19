@@ -39,7 +39,7 @@ public class Player {
 		_moveSpeed = 100.0f;
 		_width = _texture.getWidth() / 3;
 		_height = _texture.getHeight() / 4;
-		_position = new Vector2(x,y+_height/2);
+		_position = new Vector2(x,y);
 	}
 	
 	public Animation getAnimation() {

@@ -17,7 +17,7 @@ public final class BallManager {
 		
 		for (int i = 0; i < count; i++) {
 			positionX += positionStep;
-			Vector2 position = new Vector2(positionX, Gdx.graphics.getHeight() - 350);
+			Vector2 position = new Vector2(positionX, Gdx.graphics.getHeight() - 150);
 			ball = new Ball(level, position);
 
 			if(positionX <= WorldManager.getCamera().viewportWidth / 2)
@@ -65,8 +65,8 @@ public final class BallManager {
 		ball1.refresh();
 		ball2.refresh();
 		
-		ball1.getBody().applyLinearImpulse(-200.0f, 200.0f, 20, 0, true);
-		ball2.getBody().applyLinearImpulse(200.0f, 200.0f, 20, 0, true);
+		ball1.getBody().applyLinearImpulse(-200.0f, 0f, ball1.getBody().getPosition().x, ball1.getBody().getPosition().y, true);
+		ball2.getBody().applyLinearImpulse(200.0f, 0f, ball2.getBody().getPosition().x, ball2.getBody().getPosition().y, true);
 		
 		removeBall(ball);
 	}
