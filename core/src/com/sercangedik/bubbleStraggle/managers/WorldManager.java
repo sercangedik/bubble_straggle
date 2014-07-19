@@ -30,21 +30,21 @@ public final class WorldManager {
 	public static short GROUP_WALL = 1;
 	public static short GROUP_BALL = -2;
 	
-	protected static OrthographicCamera camera = null;
+	protected static OrthographicCamera _camera = null;
 	
 	public static OrthographicCamera getCamera() {
-		if(camera == null) {
+		if(_camera == null) {
 			//@TODO: dynamic camera sizing
 			
-			camera = new OrthographicCamera();  
-	        camera.viewportHeight = 480;  
-	        camera.viewportWidth = 640;  
-	        camera.position.set(camera.viewportWidth * .5f, camera.viewportHeight * .5f, 0f);  
-	        camera.update();  
+			_camera = new OrthographicCamera();  
+			_camera.viewportHeight = 480;  
+			_camera.viewportWidth = 640;  
+			_camera.position.set(_camera.viewportWidth * .5f, _camera.viewportHeight * .5f, 0f);  
+			_camera.update();  
 		}
 		
 		
-		return camera;
+		return _camera;
 	}
 	
 	public static void createWall(float x, float y, float w, float h) {
