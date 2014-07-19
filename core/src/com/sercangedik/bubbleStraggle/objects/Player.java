@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.sercangedik.bubbleStraggle.managers.BallManager;
 import com.sercangedik.bubbleStraggle.managers.GameManager;
@@ -24,8 +25,7 @@ public class Player {
 	protected Vector2 _position;
 	protected float _moveSpeed;
 	protected int _direction = STAND;
-	
-	
+	protected int _live = 3;
 	
 	public Player(FileHandle fileHandle) {
 		this(fileHandle,0,0);
@@ -83,15 +83,18 @@ public class Player {
 		return getAnimation().getKeyFrame(GameManager.getCurrentFrameTime(),true);
 	}
 	
+	public void checkOverlaps() {
+		Rectangle playerRectangle = new Rectangle();
+		playerRectangle.set(getPosition().x, getPosition().y, getWidth(), getHeight());
+		
+		Ball ball;
+		
+		if((ball = BallManager.checkOverlaps(playerRectangle)) != null)
+			GameManager.crashBall(ball);
+	}
+	
 	public void controlHandler(SpriteBatch batch) {
-		if(Gdx.input.isKeyPressed(Keys.NUM_0) || Gdx.input.isTouched()){
-			try {
-				BallManager.shoot(BallManager.balls.get(0));
-			} catch (CloneNotSupportedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		checkOverlaps();
 		
 		if(Gdx.input.isKeyPressed(Keys.A)){
 			move(Player.MOVE_LEFT);
@@ -104,10 +107,13 @@ public class Player {
 		else {
 			if(_direction != STAND)
 				_animation = new Animation(0.10f, _frames[0]);
-			
 			_direction = STAND;
 		}
 		
 		batch.draw(getCurrentFrame(), getPosition().x, getPosition().y);
+	}
+	
+	public int crashBall(Ball ball) {
+		return --_live;
 	}
 }

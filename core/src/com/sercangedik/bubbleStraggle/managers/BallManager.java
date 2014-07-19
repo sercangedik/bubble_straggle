@@ -3,6 +3,7 @@ package com.sercangedik.bubbleStraggle.managers;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.sercangedik.bubbleStraggle.objects.Ball;
 
@@ -42,6 +43,8 @@ public final class BallManager {
 	}
 	
 	public static void shoot(Ball ball) throws CloneNotSupportedException {
+		GameManager.shootBall(ball);
+		
 		if(ball.getLevel() == 1) {
 			removeBall(ball);
 			return;
@@ -72,5 +75,23 @@ public final class BallManager {
 		for (Ball ball : balls) {
 			ball.refresh();
 		}
+	}
+	
+	private static boolean overlaps(Ball ball, Rectangle rectangle) {
+		float x = ball.getPosition().x;
+		float y = ball.getPosition().y;
+		float width = ball.getShape().getRadius() * 2;
+		float height = ball.getShape().getRadius() * 2;
+		
+		return x < rectangle.x + rectangle.width && x + width > rectangle.x && y < rectangle.y + rectangle.height && y + height > rectangle.y;
+	}
+	
+	public static Ball checkOverlaps(Rectangle rectangle) {
+		for (Ball ball : balls) {
+			if(overlaps(ball, rectangle))
+				return ball;
+		}
+		
+		return null;
 	}
 }
