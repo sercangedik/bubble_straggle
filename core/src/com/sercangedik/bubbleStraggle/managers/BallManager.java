@@ -65,8 +65,8 @@ public final class BallManager {
 		ball1.refresh();
 		ball2.refresh();
 		
-		ball1.getBody().applyLinearImpulse(-200.0f, 0f, ball1.getBody().getPosition().x, ball1.getBody().getPosition().y, true);
-		ball2.getBody().applyLinearImpulse(200.0f, 0f, ball2.getBody().getPosition().x, ball2.getBody().getPosition().y, true);
+		ball1.getBody().applyLinearImpulse(-200.0f,-200f, ball1.getBody().getPosition().x, ball1.getBody().getPosition().y, true);
+		ball2.getBody().applyLinearImpulse(200.0f, -200f, ball2.getBody().getPosition().x, ball2.getBody().getPosition().y, true);
 		
 		removeBall(ball);
 	}

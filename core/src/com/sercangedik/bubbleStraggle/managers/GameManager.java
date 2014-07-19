@@ -62,7 +62,7 @@ public final class GameManager {
 	
 	public static void beforeRender() {
 		setDelta();
-		//WorldManager.world.step(1/60f, 6, 2);
+		WorldManager.world.step(1/60f, 6, 2);
 	}
 	
 	public static float addGamePoint(float point) {
@@ -76,10 +76,12 @@ public final class GameManager {
 	}
 	
 	public static void shootBall(Ball ball) {
+		Gdx.audio.newMusic(Gdx.files.internal("sounds/topvurusu.mp3")).play();
 		addGamePoint(30 / ball.getLevel());
 	}
 	
 	public static void crashBall(Ball ball) {
+		Gdx.audio.newMusic(Gdx.files.internal("sounds/olum.mp3")).play();
 		if(_player.crashBall(ball) == 0)
 			gameOver();
 		else

@@ -44,6 +44,5 @@ public class BubbleStraggle extends ApplicationAdapter {
 		GameManager.getBullet().controlHandler(batch);
 		batch.end();
 		
-		WorldManager.world.step(1/60f, 6, 2);
 	}
 }
