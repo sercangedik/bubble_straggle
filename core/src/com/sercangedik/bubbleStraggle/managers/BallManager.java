@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Contact;
+import com.badlogic.gdx.physics.box2d.ContactImpulse;
+import com.badlogic.gdx.physics.box2d.ContactListener;
+import com.badlogic.gdx.physics.box2d.Manifold;
 import com.sercangedik.bubbleStraggle.objects.Ball;
 
 public final class BallManager {
@@ -17,14 +21,19 @@ public final class BallManager {
 		
 		for (int i = 0; i < count; i++) {
 			positionX += positionStep;
-			Vector2 position = new Vector2(positionX, Gdx.graphics.getHeight() - 50);
+			Vector2 position = new Vector2(positionX, Gdx.graphics.getHeight() - 350);
 			
 			ball = new Ball(level, position);
-			
+			Vector2 vel = ball.getBody().getLinearVelocity(); 
+			if(positionX <= WorldManager.getCamera().viewportWidth / 2)
+				ball.getBody().applyLinearImpulse(400.0f, 0f, ball.getBody().getLocalCenter().x, ball.getBody().getLocalCenter().y, false);
+			else
+				ball.getBody().applyLinearImpulse(-400.0f, 0f, ball.getBody().getLocalCenter().x, ball.getBody().getLocalCenter().y, false);
+
 			addBall(ball);
 		}
 	}
-	
+
 	public static void addBall(Ball ball) {
 		balls.add(ball);
 	}
@@ -59,8 +68,8 @@ public final class BallManager {
 		ball1.refresh();
 		ball2.refresh();
 		
-		ball1.getBody().applyLinearImpulse(-10.0f, 10.0f, 0, 0, true);
-		ball2.getBody().applyLinearImpulse(10.0f, 10.0f, 0, 0, true);
+		ball1.getBody().applyLinearImpulse(-200.0f, 200.0f, 20, 0, true);
+		ball2.getBody().applyLinearImpulse(200.0f, 200.0f, 20, 0, true);
 		
 		removeBall(ball);
 	}

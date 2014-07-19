@@ -25,7 +25,7 @@ public class BubbleStraggle extends ApplicationAdapter {
 		WorldManager.createWall(WorldManager.LEFT_WALL_X,WorldManager.LEFT_WALL_Y,WorldManager.LEFT_WALL_WIDTH,WorldManager.LEFT_WALL_HEIGHT);
 		WorldManager.createWall(WorldManager.RIGHT_WALL_X,WorldManager.RIGHT_WALL_Y,WorldManager.RIGHT_WALL_WIDTH,WorldManager.RIGHT_WALL_HEIGHT);
 		
-		BallManager.createBalls(10, 3);
+		BallManager.createBalls(4, 3);
 		BallManager.refreshBalls();
 		
 		debugRenderer = new Box2DDebugRenderer();
@@ -47,6 +47,7 @@ public class BubbleStraggle extends ApplicationAdapter {
 				e.printStackTrace();
 			}
 		}
+		
 		
 		batch.begin();
 		batch.end();

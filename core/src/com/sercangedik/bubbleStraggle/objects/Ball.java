@@ -20,11 +20,11 @@ public class Ball {
 	private boolean _isCreated = false;
 	
 	public Ball(int level) {
-		this(level,0,0,10.0f,new Vector2(0.0f,0.0f));
+		this(level,1.0f,0,1f,new Vector2(0.0f,0.0f));
 	}
 	
 	public Ball(int level, Vector2 position) {
-		this(level,0,0,10.0f,position);
+		this(level,1.0f,0,1f,position);
 	}
 	
 	public Ball(int level, float density, float friction, float restitution, Vector2 position) {
@@ -41,6 +41,9 @@ public class Ball {
 	}
 	
 	public Body getBody() {
+		if(_body == null)
+			createBody();
+		
 		return _body;
 	}
 
@@ -95,11 +98,21 @@ public class Ball {
 		createShape();
 	}
 	
-	public void create() {
+	protected void createBodyDef() {
 		_bodyDef = new BodyDef();
 		_bodyDef.type = BodyType.DynamicBody;
 		_bodyDef.position.set(_position);
+	}
+	
+	protected void createBody() {
+		createBodyDef();
+		
 		_body = WorldManager.world.createBody(_bodyDef);
+	}
+	
+	public void create() {
+		if(_body == null)
+			createBody();
 		
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = _shape;

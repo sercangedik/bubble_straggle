@@ -9,7 +9,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
 public final class WorldManager {
-	public static World world = new World(new Vector2(0.0f, -100.0f), true);
+	public static World world = new World(new Vector2(0.0f, -60.0f), true);
 	
 	
 	public static float BOTTOM_WALL_X = 0.0f;
@@ -58,7 +58,7 @@ public final class WorldManager {
 		
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = groundBox;
-		fixtureDef.density = 0.0f; 
+		fixtureDef.density = 1.0f;
 		fixtureDef.filter.groupIndex = WorldManager.GROUP_WALL;
 		
 		groundBody.createFixture(fixtureDef);
