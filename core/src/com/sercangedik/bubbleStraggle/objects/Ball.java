@@ -20,11 +20,11 @@ public class Ball {
 	private boolean _isCreated = false;
 	
 	public Ball(int level) {
-		this(level,0,0,1.0f,new Vector2(0.0f,0.0f));
+		this(level,0,0,10.0f,new Vector2(0.0f,0.0f));
 	}
 	
 	public Ball(int level, Vector2 position) {
-		this(level,0,0,1.0f,position);
+		this(level,0,0,10.0f,position);
 	}
 	
 	public Ball(int level, float density, float friction, float restitution, Vector2 position) {
@@ -106,6 +106,7 @@ public class Ball {
 		fixtureDef.density = _density; 
 		fixtureDef.friction = _friction;
 		fixtureDef.restitution = _restitution;
+		fixtureDef.filter.groupIndex = WorldManager.GROUP_BALL;
 		
 		_body.createFixture(fixtureDef);
 		

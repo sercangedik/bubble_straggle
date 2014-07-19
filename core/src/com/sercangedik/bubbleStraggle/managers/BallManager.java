@@ -41,7 +41,6 @@ public final class BallManager {
 	public static void shoot(Ball ball) throws CloneNotSupportedException {
 		if(ball.getLevel() == 1) {
 			removeBall(ball);
-			
 			return;
 		}
 		

@@ -4,6 +4,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 
@@ -16,7 +17,6 @@ public final class WorldManager {
 	public static float BOTTOM_WALL_WIDTH = WorldManager.getCamera().viewportWidth;
 	public static float BOTTOM_WALL_Y = BOTTOM_WALL_HEIGHT;
 	
-	
 	public static float LEFT_WALL_Y = WorldManager.getCamera().viewportHeight;
 	public static float LEFT_WALL_WIDTH = 10.0f;
 	public static float LEFT_WALL_HEIGHT = WorldManager.getCamera().viewportHeight - BOTTOM_WALL_Y - BOTTOM_WALL_HEIGHT;
@@ -26,6 +26,9 @@ public final class WorldManager {
 	public static float RIGHT_WALL_WIDTH = 10.0f;
 	public static float RIGHT_WALL_HEIGHT = WorldManager.getCamera().viewportHeight - BOTTOM_WALL_Y - BOTTOM_WALL_HEIGHT;
 	public static float RIGHT_WALL_X = WorldManager.getCamera().viewportWidth - RIGHT_WALL_WIDTH;
+	
+	public static short GROUP_WALL = 1;
+	public static short GROUP_BALL = -2;
 	
 	protected static OrthographicCamera camera = null;
 	
@@ -52,7 +55,13 @@ public final class WorldManager {
 
 		PolygonShape groundBox = new PolygonShape();  
 		groundBox.setAsBox(w, h);
-		groundBody.createFixture(groundBox, 0.0f);
+		
+		FixtureDef fixtureDef = new FixtureDef();
+		fixtureDef.shape = groundBox;
+		fixtureDef.density = 0.0f; 
+		fixtureDef.filter.groupIndex = WorldManager.GROUP_WALL;
+		
+		groundBody.createFixture(fixtureDef);
 		groundBox.dispose();
 	}
 }
