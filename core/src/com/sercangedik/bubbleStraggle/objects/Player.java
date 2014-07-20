@@ -96,11 +96,11 @@ public class Player {
 	public void controlHandler(SpriteBatch batch) {
 		checkOverlaps();
 		
-		if(Gdx.input.isKeyPressed(Keys.A)){
+		if(Gdx.input.isKeyPressed(Keys.A) || Gdx.input.getAccelerometerY() < 0){
 			move(Player.MOVE_LEFT);
 			_animation = new Animation(0.10f, _frames[1]);
 		}
-		else if(Gdx.input.isKeyPressed(Keys.D)){
+		else if(Gdx.input.isKeyPressed(Keys.D) ||  Gdx.input.getAccelerometerY() > 0){
 			move(Player.MOVE_RIGHT);
 			_animation = new Animation(0.10f, _frames[2]);
 		}

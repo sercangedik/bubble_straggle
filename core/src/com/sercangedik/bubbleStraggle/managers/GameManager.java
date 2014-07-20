@@ -16,17 +16,16 @@ public final class GameManager {
 	protected static float _currentFrameTime = 0;
 	protected static float _gamePoint = 0;
 	
-	private static TextureRegion textureRegion;
-	private static Texture backgroundTexture;
-	private static Sprite backgroundSprite;
 	private static Texture wallTexture;
 	private static Sprite wallSprite;
 	private static Texture pointTexture;
 	private static Sprite pointSprite;
-	private static Texture peakTexture;
-	private static Sprite peakSprite;
 	private static Texture liveTexture;
 	private static Sprite liveSprite;
+	private static Texture headTexture;
+	private static Sprite headSprite1;
+	private static Sprite headSprite2;
+	private static Sprite headSprite3;
 	private static float scaling = (float) 1.2;
 	
 	public static Player getPlayer() {
@@ -94,35 +93,38 @@ public final class GameManager {
 	
 	public static void setTextures(SpriteBatch batch) {
 		
-		textureRegion = new TextureRegion(new Texture(Gdx.files.internal("images/bg.jpg")));
-		textureRegion.flip(false, true);
-		backgroundTexture = new Texture("images/bg.jpg");
-	    backgroundSprite = new Sprite(backgroundTexture);
-	    
+		 
 	    wallTexture = new Texture("images/wall.jpg");
 	    wallSprite = new Sprite(wallTexture);
 	 
 	    pointTexture = new Texture("images/puantablosu.png");
 	    pointSprite = new Sprite(pointTexture);
-	    
-	    peakTexture = new Texture("images/peak.jpg");
-	    peakSprite = new Sprite(peakTexture);
-	    
+	  
 	    liveTexture = new Texture("images/can.png");
 	    liveSprite = new Sprite(liveTexture);
 	    
+	    headTexture = new Texture("images/head.png");
+	    headSprite1 = new Sprite(headTexture);
+	    headSprite2 = new Sprite(headTexture);
+	    headSprite3 = new Sprite(headTexture);
 	    
-		backgroundSprite.setPosition(10, 60);
+	    headSprite1.scale((float) 1.05);
+	    headSprite2.scale((float) 1.05);
+	    headSprite3.scale((float) 1.05);
+	    
 	    pointSprite.setPosition(490, 5);
-		peakSprite.setPosition(270, 5);
-		liveSprite.setPosition(20, 5);
+	    liveSprite.setPosition(20, 5);
+	    headSprite1.setPosition(30, 25);
+	    headSprite2.setPosition(70, 25);
+	    headSprite3.setPosition(110, 25);
 		pointSprite.setScale(scaling);
 		liveSprite.setScale(scaling);
-		
+		//wallSprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 		wallSprite.draw(batch);
-		backgroundSprite.draw(batch);
 		pointSprite.draw(batch);
-		peakSprite.draw(batch);
 		liveSprite.draw(batch);
+		headSprite1.draw(batch);
+		headSprite2.draw(batch);
+		headSprite3.draw(batch);
 	}
 }

@@ -93,7 +93,7 @@ public class Bullet {
 	}
 	
 	public void controlHandler(SpriteBatch batch) {
-		if(Gdx.input.isKeyPressed(Keys.SPACE)) {
+		if(Gdx.input.isKeyPressed(Keys.SPACE) || Gdx.input.isTouched()) {
 			fire();
 		}
 		
