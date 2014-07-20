@@ -58,6 +58,8 @@ public final class BallManager {
 		
 		Ball ball1 = new Ball(level, density, friction, restitution, position);
 		Ball ball2 = new Ball(level, density, friction, restitution, position);
+		//radiuslar yariya dusmuyor olabilir ?
+		//patlayan topu silip yerine yenilerini ekleyebilirim. 
 		
 		addBall(ball1);
 		addBall(ball2);
@@ -65,8 +67,8 @@ public final class BallManager {
 		ball1.refresh();
 		ball2.refresh();
 		
-		ball1.getBody().applyLinearImpulse(-200.0f,-200f, ball1.getBody().getPosition().x, ball1.getBody().getPosition().y, true);
-		ball2.getBody().applyLinearImpulse(200.0f, -200f, ball2.getBody().getPosition().x, ball2.getBody().getPosition().y, true);
+		ball1.getBody().applyLinearImpulse(0,-200f, ball1.getBody().getPosition().x, ball1.getBody().getPosition().y, true);
+		ball2.getBody().applyLinearImpulse(0, -200f, ball2.getBody().getPosition().x, ball2.getBody().getPosition().y, true);
 		
 		removeBall(ball);
 	}

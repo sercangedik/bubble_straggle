@@ -80,7 +80,7 @@ public class Bullet {
 	
 	public void checkOverlaps() {
 		Rectangle playerRectangle = new Rectangle();
-		playerRectangle.set(getPosition().x, getPosition().y+getHeight()+50, getWidth(), 30f);
+		playerRectangle.set(getPosition().x, getPosition().y+getHeight()+50, getWidth()+50f, 10f);
 		
 		Ball ball;
 		

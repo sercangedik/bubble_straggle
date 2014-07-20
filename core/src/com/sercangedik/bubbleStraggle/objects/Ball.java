@@ -37,7 +37,7 @@ public class Ball {
 	
 	protected void createShape() {
 		_shape = new CircleShape();
-		_shape.setRadius(_level*10.0f/2);
+		_shape.setRadius(_level*20.0f/2);
 	}
 	
 	public Body getBody() {

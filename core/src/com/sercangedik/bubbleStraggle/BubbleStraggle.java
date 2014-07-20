@@ -24,7 +24,8 @@ public class BubbleStraggle extends ApplicationAdapter {
 		WorldManager.createWall(WorldManager.BOTTOM_WALL_X,WorldManager.BOTTOM_WALL_Y,WorldManager.BOTTOM_WALL_WIDTH,WorldManager.BOTTOM_WALL_HEIGHT);
 		WorldManager.createWall(WorldManager.LEFT_WALL_X,WorldManager.LEFT_WALL_Y,WorldManager.LEFT_WALL_WIDTH,WorldManager.LEFT_WALL_HEIGHT);
 		WorldManager.createWall(WorldManager.RIGHT_WALL_X,WorldManager.RIGHT_WALL_Y,WorldManager.RIGHT_WALL_WIDTH,WorldManager.RIGHT_WALL_HEIGHT);
-		BallManager.createBalls(1, 3);
+		//TODO: top sayisi artinca bug olusuyor.
+		BallManager.createBalls(3, 2);
 		BallManager.refreshBalls();
 		
 		debugRenderer = new Box2DDebugRenderer();
@@ -36,13 +37,13 @@ public class BubbleStraggle extends ApplicationAdapter {
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		
 		GameManager.beforeRender();
-		debugRenderer.render(WorldManager.world, WorldManager.getCamera().combined);
+		
 		
 		batch.begin();
-		//GameManager.setTextures(batch);
+		GameManager.setTextures(batch);
 		GameManager.getPlayer().controlHandler(batch);
 		GameManager.getBullet().controlHandler(batch);
 		batch.end();
-		
+		debugRenderer.render(WorldManager.world, WorldManager.getCamera().combined);
 	}
 }
