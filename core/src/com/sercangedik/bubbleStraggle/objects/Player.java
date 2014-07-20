@@ -11,11 +11,16 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.sercangedik.bubbleStraggle.managers.BallManager;
 import com.sercangedik.bubbleStraggle.managers.GameManager;
+import com.sercangedik.bubbleStraggle.managers.WorldManager;
 
 public class Player {
 	public static int MOVE_LEFT = -1;
 	public static int MOVE_RIGHT = 1;
 	public static int STAND = 0;
+	
+	public static int LEFT = -1;
+	public static int CENTER = 0;
+	public static int RIGHT = 1;
 	
 	protected Animation _animation;
 	protected TextureRegion[][] _frames;
@@ -25,10 +30,15 @@ public class Player {
 	protected Vector2 _position;
 	protected float _moveSpeed;
 	protected int _direction = STAND;
-	protected int _live = 3;
+	protected int _live = 300;
 	
 	public Player(FileHandle fileHandle) {
 		this(fileHandle,0,0);
+	}
+	
+	public Player(FileHandle fileHandle, int position) {
+		this(fileHandle,0,0);
+		setPosition(position);
 	}
 	
 	public Player(FileHandle fileHandle, float x, float y) {
@@ -42,55 +52,58 @@ public class Player {
 		_position = new Vector2(x,y);
 	}
 	
-	public Animation getAnimation() {
-		return _animation;
-	}
-
-	public TextureRegion[][] getFrames() {
-		return _frames;
-	}
-
-	public int getWidth() {
-		return _width;
-	}
-
-	public int getHeight() {
-		return _height;
-	}
-	
-	public void setPosition(float x, float y) {
-		_position = new Vector2(x,y);
+	private void setPosition(int position) {
+		float x = 0;
+		float y = WorldManager.BOTTOM_WALL_HEIGHT * 2;
+		
+		if(position == LEFT) {
+			x = WorldManager.LEFT_WALL_WIDTH;
+		}
+		else if(position == CENTER) {
+			x = WorldManager.getCamera().viewportWidth / 2 - _width / 2;
+		}
+		else if(position == RIGHT) {
+			x = WorldManager.getCamera().viewportWidth - _width - WorldManager.RIGHT_WALL_WIDTH;
+		}
+		
+		_position.x = x;
+		_position.y = y;
 	}
 	
-	public Vector2 getPosition() {
-		return _position;
-	}
-
-	public float getMoveSpeed() {
-		return _moveSpeed;
-	}
-
-	public void setMoveSpeed(float _moveSpeed) {
-		this._moveSpeed = _moveSpeed;
+	private TextureRegion getCurrentFrame() {
+		return _animation.getKeyFrame(GameManager.getCurrentFrameTime(),true);
 	}
 	
-	public void move(int direction) {
+	private void crash() {
+		Gdx.audio.newMusic(Gdx.files.internal("sounds/olum.mp3")).play();
+		
+		--_live;
+		
+		if(_live <= 0)
+			GameManager.gameOver();
+		else
+			born();
+	}
+	
+	private void checkOverlaps() {
+		Rectangle playerRectangle = new Rectangle();
+		playerRectangle.set(_position.x, _position.y, _width, _height);
+		
+		if(BallManager.checkOverlaps(playerRectangle) != null)
+			crash();
+	}
+	
+	private void move(int direction) {
 		_position.x += _moveSpeed * GameManager.getDelta() * direction;
 		_direction = direction;
 	}
 	
-	public TextureRegion getCurrentFrame() {
-		return getAnimation().getKeyFrame(GameManager.getCurrentFrameTime(),true);
+	public float getFirePositionX() {
+		return _position.x + _width / 2;
 	}
 	
-	public void checkOverlaps() {
-		Rectangle playerRectangle = new Rectangle();
-		playerRectangle.set(getPosition().x, getPosition().y, getWidth(), getHeight());
-		
-		Ball ball;
-		
-		if((ball = BallManager.checkOverlaps(playerRectangle)) != null)
-			GameManager.crashBall(ball);
+	public void setMoveSpeed(float moveSpeed) {
+		_moveSpeed = moveSpeed;
 	}
 	
 	public void controlHandler(SpriteBatch batch) {
@@ -110,10 +123,19 @@ public class Player {
 			_direction = STAND;
 		}
 		
-		batch.draw(getCurrentFrame(), getPosition().x, getPosition().y);
+		if(Gdx.input.isKeyPressed(Keys.NUM_0)){
+			try {
+				BallManager.shoot(BallManager.balls.get(0));
+			} catch (CloneNotSupportedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
+		batch.draw(getCurrentFrame(), _position.x, _position.y);
 	}
 	
-	public int crashBall(Ball ball) {
-		return --_live;
+	public void born() {
+		setPosition(CENTER);
 	}
 }

@@ -19,23 +19,10 @@ public final class BallManager {
 			positionX += positionStep;
 			Vector2 position = new Vector2(positionX, Gdx.graphics.getHeight() - 150);
 			ball = new Ball(level, position);
-
-			if(positionX <= WorldManager.getCamera().viewportWidth / 2)
-				ball.getBody().applyLinearImpulse(400.0f, 0f, ball.getBody().getLocalCenter().x, ball.getBody().getLocalCenter().y, false);
-			else
-				ball.getBody().applyLinearImpulse(-400.0f, 0f, ball.getBody().getLocalCenter().x, ball.getBody().getLocalCenter().y, false);
-
-			addBall(ball);
+			
+			balls.add(ball);
+			ball.show();
 		}
-	}
-
-	public static void addBall(Ball ball) {
-		balls.add(ball);
-	}
-	
-	public static void removeBall(Ball ball) {
-		WorldManager.world.destroyBody(ball.getBody());
-		balls.remove(ball);
 	}
 	
 	public static void clean() {
@@ -43,10 +30,10 @@ public final class BallManager {
 	}
 	
 	public static void shoot(Ball ball) throws CloneNotSupportedException {
-		GameManager.shootBall(ball);
+		ball.shoot();
 		
 		if(ball.getLevel() == 1) {
-			removeBall(ball);
+			balls.remove(ball);
 			return;
 		}
 		
@@ -61,30 +48,21 @@ public final class BallManager {
 		//radiuslar yariya dusmuyor olabilir ?
 		//patlayan topu silip yerine yenilerini ekleyebilirim. 
 		
-		addBall(ball1);
-		addBall(ball2);
+		balls.add(ball1);
+		balls.add(ball2);
 		
-		ball1.refresh();
-		ball2.refresh();
+		ball1.show(Ball.EFFECT_BLOW_UP_LEFT);
+		ball2.show(Ball.EFFECT_BLOW_UP_RIGHT);
 		
-		ball1.getBody().applyLinearImpulse(0,-200f, ball1.getBody().getPosition().x, ball1.getBody().getPosition().y, true);
-		ball2.getBody().applyLinearImpulse(0, -200f, ball2.getBody().getPosition().x, ball2.getBody().getPosition().y, true);
-		
-		removeBall(ball);
-	}
-	
-	public static void refreshBalls() {
-		for (Ball ball : balls) {
-			ball.refresh();
-		}
+		balls.remove(ball);
 	}
 	
 	private static boolean overlaps(Ball ball, Rectangle rectangle) {
 		float x = ball.getPosition().x;
 		float y = ball.getPosition().y;
-		float width = ball.getShape().getRadius() * 2;
-		float height = ball.getShape().getRadius() * 2;
-		
+		float width = ball.getWidth();
+		float height = ball.getHeight();
+
 		return x < rectangle.x + rectangle.width && x + width > rectangle.x && y < rectangle.y + rectangle.height && y + height > rectangle.y;
 	}
 	

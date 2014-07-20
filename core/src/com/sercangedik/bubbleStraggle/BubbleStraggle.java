@@ -1,7 +1,5 @@
 package com.sercangedik.bubbleStraggle;
 
-import java.awt.Font;
-
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
@@ -27,9 +25,9 @@ public class BubbleStraggle extends ApplicationAdapter {
 		WorldManager.createWall(WorldManager.BOTTOM_WALL_X,WorldManager.BOTTOM_WALL_Y,WorldManager.BOTTOM_WALL_WIDTH,WorldManager.BOTTOM_WALL_HEIGHT);
 		WorldManager.createWall(WorldManager.LEFT_WALL_X,WorldManager.LEFT_WALL_Y,WorldManager.LEFT_WALL_WIDTH,WorldManager.LEFT_WALL_HEIGHT);
 		WorldManager.createWall(WorldManager.RIGHT_WALL_X,WorldManager.RIGHT_WALL_Y,WorldManager.RIGHT_WALL_WIDTH,WorldManager.RIGHT_WALL_HEIGHT);
+		
 		//TODO: top sayisi artinca bug olusuyor.
 		BallManager.createBalls(3, 2);
-		BallManager.refreshBalls();
 		
 		//font
 		font.scale((float) 1.05);

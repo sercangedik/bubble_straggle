@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.sercangedik.bubbleStraggle.objects.Ball;
 import com.sercangedik.bubbleStraggle.objects.Bullet;
 import com.sercangedik.bubbleStraggle.objects.Player;
@@ -30,7 +29,7 @@ public final class GameManager {
 	
 	public static Player getPlayer() {
 		if(_player == null) {
-			_player = new Player(Gdx.files.internal("images/man.png"),320,57);
+			_player = new Player(Gdx.files.internal("images/man.png"),Player.RIGHT);
 		}
 		
 		return _player;
@@ -78,16 +77,8 @@ public final class GameManager {
 		Gdx.audio.newMusic(Gdx.files.internal("sounds/topvurusu.mp3")).play();
 		addGamePoint(30 / ball.getLevel());
 	}
-	
-	public static void crashBall(Ball ball) {
-		Gdx.audio.newMusic(Gdx.files.internal("sounds/olum.mp3")).play();
-		if(_player.crashBall(ball) == 0)
-			gameOver();
-		else
-			_player.setPosition(320,57);
-	}
 
-	private static void gameOver() {
+	public static void gameOver() {
 		
 	}
 	
