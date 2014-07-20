@@ -14,18 +14,18 @@ public final class WorldManager {
 	
 	public static float BOTTOM_WALL_X = 0.0f;
 	public static float BOTTOM_WALL_HEIGHT = 30.0f;
-	public static float BOTTOM_WALL_WIDTH = WorldManager.getCamera().viewportWidth;
+	public static float BOTTOM_WALL_WIDTH = getCamera().viewportWidth;
 	public static float BOTTOM_WALL_Y = BOTTOM_WALL_HEIGHT;
 	
-	public static float LEFT_WALL_Y = WorldManager.getCamera().viewportHeight;
+	public static float LEFT_WALL_Y = getCamera().viewportHeight;
 	public static float LEFT_WALL_WIDTH = 10.0f;
-	public static float LEFT_WALL_HEIGHT = WorldManager.getCamera().viewportHeight - BOTTOM_WALL_Y - BOTTOM_WALL_HEIGHT;
+	public static float LEFT_WALL_HEIGHT = getCamera().viewportHeight - BOTTOM_WALL_Y - BOTTOM_WALL_HEIGHT;
 	public static float LEFT_WALL_X = LEFT_WALL_WIDTH;
 	
-	public static float RIGHT_WALL_Y = WorldManager.getCamera().viewportHeight;
+	public static float RIGHT_WALL_Y = getCamera().viewportHeight;
 	public static float RIGHT_WALL_WIDTH = 10.0f;
-	public static float RIGHT_WALL_HEIGHT = WorldManager.getCamera().viewportHeight - BOTTOM_WALL_Y - BOTTOM_WALL_HEIGHT;
-	public static float RIGHT_WALL_X = WorldManager.getCamera().viewportWidth - RIGHT_WALL_WIDTH;
+	public static float RIGHT_WALL_HEIGHT = getCamera().viewportHeight - BOTTOM_WALL_Y - BOTTOM_WALL_HEIGHT;
+	public static float RIGHT_WALL_X = getCamera().viewportWidth - RIGHT_WALL_WIDTH;
 	
 	public static short GROUP_WALL = 1;
 	public static short GROUP_BALL = -2;
@@ -59,9 +59,16 @@ public final class WorldManager {
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = groundBox;
 		fixtureDef.density = 1.0f;
-		fixtureDef.filter.groupIndex = WorldManager.GROUP_WALL;
+		fixtureDef.filter.groupIndex = GROUP_WALL;
 		
 		groundBody.createFixture(fixtureDef);
 		groundBox.dispose();
+	}
+	
+	public static void restart() {
+		createWall(BOTTOM_WALL_X,BOTTOM_WALL_Y,BOTTOM_WALL_WIDTH,BOTTOM_WALL_HEIGHT);
+		createWall(LEFT_WALL_X,LEFT_WALL_Y,LEFT_WALL_WIDTH,LEFT_WALL_HEIGHT);
+		createWall(RIGHT_WALL_X,RIGHT_WALL_Y,RIGHT_WALL_WIDTH,RIGHT_WALL_HEIGHT);
+		
 	}
 }

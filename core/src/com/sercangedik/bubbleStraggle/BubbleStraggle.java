@@ -3,36 +3,19 @@ package com.sercangedik.bubbleStraggle;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.World;
-import com.sercangedik.bubbleStraggle.managers.BallManager;
 import com.sercangedik.bubbleStraggle.managers.GameManager;
 import com.sercangedik.bubbleStraggle.managers.WorldManager;
 
 public class BubbleStraggle extends ApplicationAdapter {
 	SpriteBatch batch;
-	BitmapFont font;
 	Box2DDebugRenderer debugRenderer;
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
-		font = new BitmapFont();
-		//BUG
-		World a = WorldManager.world;
-		WorldManager.createWall(WorldManager.BOTTOM_WALL_X,WorldManager.BOTTOM_WALL_Y,WorldManager.BOTTOM_WALL_WIDTH,WorldManager.BOTTOM_WALL_HEIGHT);
-		WorldManager.createWall(WorldManager.LEFT_WALL_X,WorldManager.LEFT_WALL_Y,WorldManager.LEFT_WALL_WIDTH,WorldManager.LEFT_WALL_HEIGHT);
-		WorldManager.createWall(WorldManager.RIGHT_WALL_X,WorldManager.RIGHT_WALL_Y,WorldManager.RIGHT_WALL_WIDTH,WorldManager.RIGHT_WALL_HEIGHT);
-		
-		//TODO: top sayisi artinca bug olusuyor.
-		BallManager.createBalls(3, 2);
-		
-		//font
-		font.scale((float) 1.05);
-		font.setColor(0.0f, 0.0f, 0.0f, 1.0f);
-
+		GameManager.restart();
 		debugRenderer = new Box2DDebugRenderer();
 	}
 
@@ -44,11 +27,11 @@ public class BubbleStraggle extends ApplicationAdapter {
 		GameManager.beforeRender();
 		
 		batch.begin();
-		GameManager.setTextures(batch);
+		GameManager.renderGame(batch);
 		GameManager.getPlayer().controlHandler(batch);
 		GameManager.getBullet().controlHandler(batch);
-		font.draw(batch, "300000", 500, 45);
 		batch.end();
+		
 		debugRenderer.render(WorldManager.world, WorldManager.getCamera().combined);
 	}
 }

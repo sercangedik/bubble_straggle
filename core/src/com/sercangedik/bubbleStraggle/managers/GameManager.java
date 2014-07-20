@@ -1,9 +1,13 @@
 package com.sercangedik.bubbleStraggle.managers;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.utils.Array;
 import com.sercangedik.bubbleStraggle.objects.Ball;
 import com.sercangedik.bubbleStraggle.objects.Bullet;
 import com.sercangedik.bubbleStraggle.objects.Player;
@@ -15,21 +19,9 @@ public final class GameManager {
 	protected static float _currentFrameTime = 0;
 	protected static float _gamePoint = 0;
 	
-	private static Texture wallTexture;
-	private static Sprite wallSprite;
-	private static Texture pointTexture;
-	private static Sprite pointSprite;
-	private static Texture liveTexture;
-	private static Sprite liveSprite;
-	private static Texture headTexture;
-	private static Sprite headSprite1;
-	private static Sprite headSprite2;
-	private static Sprite headSprite3;
-	private static float scaling = (float) 1.2;
-	
 	public static Player getPlayer() {
 		if(_player == null) {
-			_player = new Player(Gdx.files.internal("images/man.png"),Player.RIGHT);
+			_player = new Player(Gdx.files.internal("images/man.png"),Player.CENTER);
 		}
 		
 		return _player;
@@ -63,59 +55,104 @@ public final class GameManager {
 		WorldManager.world.step(1/60f, 6, 2);
 	}
 	
-	public static float addGamePoint(float point) {
-		_gamePoint += point;
-		
-		return _gamePoint;
-	}
-	
 	public static float getGamePoint() {
 		return _gamePoint;
 	}
 	
 	public static void shootBall(Ball ball) {
 		Gdx.audio.newMusic(Gdx.files.internal("sounds/topvurusu.mp3")).play();
-		addGamePoint(30 / ball.getLevel());
+		_gamePoint += 30 / ball.getLevel();
 	}
 
 	public static void gameOver() {
-		
+		restart();
 	}
 	
-	public static void setTextures(SpriteBatch batch) {
+	public static void restart() {
+		Array<Body> bodies = new Array<Body>();
+		WorldManager.world.getBodies(bodies);
 		
-		 
-	    wallTexture = new Texture("images/wall.jpg");
-	    wallSprite = new Sprite(wallTexture);
-	 
-	    pointTexture = new Texture("images/puantablosu.png");
-	    pointSprite = new Sprite(pointTexture);
-	  
-	    liveTexture = new Texture("images/can.png");
-	    liveSprite = new Sprite(liveTexture);
+		for (Body body : bodies) {
+			WorldManager.world.destroyBody(body);
+		}
+		
+		WorldManager.restart();
+		BallManager.restart(3, 2);
+		_gamePoint = 0;
+		_player = new Player(Gdx.files.internal("images/man.png"),Player.CENTER);
+	}
+	
+	public static void renderGame(SpriteBatch batch) {
+		float scaling = (float) 1.2;
+		
+		//Walls
+		Texture wallTexture = new Texture("images/wall.jpg");
+		Sprite wallSprite = new Sprite(wallTexture);
+		
+	    //wallSprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+	  	wallSprite.draw(batch);
 	    
-	    headTexture = new Texture("images/head.png");
-	    headSprite1 = new Sprite(headTexture);
-	    headSprite2 = new Sprite(headTexture);
-	    headSprite3 = new Sprite(headTexture);
-	    
-	    headSprite1.scale((float) 1.05);
-	    headSprite2.scale((float) 1.05);
-	    headSprite3.scale((float) 1.05);
-	    
-	    pointSprite.setPosition(490, 5);
-	    liveSprite.setPosition(20, 5);
-	    headSprite1.setPosition(30, 25);
-	    headSprite2.setPosition(70, 25);
-	    headSprite3.setPosition(110, 25);
+		
+		//Score
+		Texture pointTexture = new Texture("images/puantablosu.png");
+		Sprite pointSprite = new Sprite(pointTexture);
+		BitmapFont font = new BitmapFont();
+		
+		pointSprite.setPosition(490, 5);
 		pointSprite.setScale(scaling);
-		liveSprite.setScale(scaling);
-		//wallSprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-		wallSprite.draw(batch);
 		pointSprite.draw(batch);
+
+		font.scale((float) 1.05);
+		font.setColor(0.0f, 0.0f, 0.0f, 1.0f);
+		font.draw(batch, Float.toString(getGamePoint()), 500, 45);
+		
+		//Live
+		Texture liveTexture = new Texture("images/can.png");
+		Sprite liveSprite = new Sprite(liveTexture);
+		
+		liveSprite.setPosition(20, 5);
+		liveSprite.setScale(scaling);
 		liveSprite.draw(batch);
-		headSprite1.draw(batch);
-		headSprite2.draw(batch);
-		headSprite3.draw(batch);
+		
+		Texture headTexture = new Texture("images/head.png");
+		Sprite headSprite;
+		
+		for (int i = 0; i < getPlayer().getLives(); i++) {
+			headSprite = new Sprite(headTexture);
+			headSprite.scale(1.05f);
+			headSprite.setPosition(30 * (i+1) + i * 10, 25);
+			headSprite.draw(batch);
+		}
+		
+		
+		
+		//tricks (:
+		if(Gdx.input.isKeyPressed(Keys.NUM_0)){
+			try {
+				if(BallManager.balls.size() > 0)
+					BallManager.shoot(BallManager.balls.get(0));
+			} catch (CloneNotSupportedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		else if(Gdx.input.isKeyPressed(Keys.R)) {
+			restart();
+		}
+		else if(Gdx.input.isKeyPressed(Keys.LEFT)) {
+			getPlayer().setPosition(Player.LEFT);
+		}
+		else if(Gdx.input.isKeyPressed(Keys.RIGHT)) {
+			getPlayer().setPosition(Player.RIGHT);
+		}
+		else if(Gdx.input.isKeyPressed(Keys.DOWN)) {
+			getPlayer().setPosition(Player.CENTER);
+		}
+		else if(Gdx.input.isKeyPressed(Keys.NUM_1)) {
+			BallManager.createBalls(1, 2);
+		}
+		else if(Gdx.input.isKeyPressed(Keys.NUM_2)) {
+			getPlayer().crash();
+		}
 	}
 }

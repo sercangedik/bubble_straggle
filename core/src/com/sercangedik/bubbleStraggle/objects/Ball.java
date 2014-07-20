@@ -6,7 +6,6 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
-import com.sercangedik.bubbleStraggle.managers.GameManager;
 import com.sercangedik.bubbleStraggle.managers.WorldManager;
 
 public class Ball {
@@ -113,7 +112,6 @@ public class Ball {
 	}
 	
 	public void shoot() {
-		GameManager.shootBall(this);
 		WorldManager.world.destroyBody(_body);
 	}
 }

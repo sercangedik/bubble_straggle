@@ -30,7 +30,7 @@ public class Player {
 	protected Vector2 _position;
 	protected float _moveSpeed;
 	protected int _direction = STAND;
-	protected int _live = 300;
+	protected int _live = 3;
 	
 	public Player(FileHandle fileHandle) {
 		this(fileHandle,0,0);
@@ -52,7 +52,7 @@ public class Player {
 		_position = new Vector2(x,y);
 	}
 	
-	private void setPosition(int position) {
+	public void setPosition(int position) {
 		float x = 0;
 		float y = WorldManager.BOTTOM_WALL_HEIGHT * 2;
 		
@@ -74,7 +74,7 @@ public class Player {
 		return _animation.getKeyFrame(GameManager.getCurrentFrameTime(),true);
 	}
 	
-	private void crash() {
+	public void crash() {
 		Gdx.audio.newMusic(Gdx.files.internal("sounds/olum.mp3")).play();
 		
 		--_live;
@@ -98,6 +98,10 @@ public class Player {
 		_direction = direction;
 	}
 	
+	public int getLives() {
+		return _live;
+	}
+	
 	public float getFirePositionX() {
 		return _position.x + _width / 2;
 	}
@@ -107,6 +111,9 @@ public class Player {
 	}
 	
 	public void controlHandler(SpriteBatch batch) {
+		if(_live <= 0)
+			return;
+		
 		checkOverlaps();
 		
 		if(Gdx.input.isKeyPressed(Keys.A) || Gdx.input.getAccelerometerY() < 0){
@@ -121,15 +128,6 @@ public class Player {
 			if(_direction != STAND)
 				_animation = new Animation(0.10f, _frames[0]);
 			_direction = STAND;
-		}
-		
-		if(Gdx.input.isKeyPressed(Keys.NUM_0)){
-			try {
-				BallManager.shoot(BallManager.balls.get(0));
-			} catch (CloneNotSupportedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
 		}
 		
 		batch.draw(getCurrentFrame(), _position.x, _position.y);

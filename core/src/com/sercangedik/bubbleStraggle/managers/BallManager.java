@@ -10,6 +10,11 @@ import com.sercangedik.bubbleStraggle.objects.Ball;
 public final class BallManager {
 	public static ArrayList<Ball> balls = new ArrayList<Ball>();
 	
+	public static void restart(int count, int level) {
+		balls = new ArrayList<Ball>();
+		createBalls(count, level);
+	}
+	
 	public static void createBalls(int count,int level) {
 		Ball ball;
 		float positionStep = Gdx.graphics.getWidth() / (count+1);
@@ -30,6 +35,7 @@ public final class BallManager {
 	}
 	
 	public static void shoot(Ball ball) throws CloneNotSupportedException {
+		GameManager.shootBall(ball);
 		ball.shoot();
 		
 		if(ball.getLevel() == 1) {
@@ -45,8 +51,6 @@ public final class BallManager {
 		
 		Ball ball1 = new Ball(level, density, friction, restitution, position);
 		Ball ball2 = new Ball(level, density, friction, restitution, position);
-		//radiuslar yariya dusmuyor olabilir ?
-		//patlayan topu silip yerine yenilerini ekleyebilirim. 
 		
 		balls.add(ball1);
 		balls.add(ball2);
