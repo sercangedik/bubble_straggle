@@ -96,7 +96,7 @@ public class Ball {
 		_body = WorldManager.world.createBody(_bodyDef);
 		
 		CircleShape shape = new CircleShape();
-		shape.setRadius(_level*20/2);
+		shape.setRadius(_level*17/2);
 		
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = shape;

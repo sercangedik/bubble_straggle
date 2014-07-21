@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Array;
 import com.sercangedik.bubbleStraggle.objects.Ball;
@@ -19,6 +20,7 @@ public final class GameManager {
 	protected static float _currentFrameTime = 0;
 	protected static float _gamePoint = 0;
 	
+	private static Array<Body> bodies = new Array<Body>();
 	private static float scaling = (float) 1.2;
 	private static Texture wallTexture;
 	private static Sprite wallSprite;
@@ -80,6 +82,7 @@ public static float getDelta() {
 		restart();
 	}
 	
+	
 	public static void restart() {
 		Array<Body> bodies = new Array<Body>();
 		WorldManager.world.getBodies(bodies);
@@ -140,6 +143,15 @@ public static float getDelta() {
 			headSprite.draw(batch);
 		}
 		
+		WorldManager.world.getBodies(bodies);
+		for(Body body : bodies)
+			if(body.getUserData() != null && body.getUserData() instanceof Sprite){
+				Sprite sprite = (Sprite) body.getUserData();
+				sprite.setPosition(body.getPosition().x-(16f), body.getPosition().y-(16f));
+				sprite.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
+				sprite.draw(batch);				
+			}
+		
 		
 		
 		//tricks (:
@@ -159,9 +171,6 @@ public static float getDelta() {
 			getPlayer().setPosition(Player.LEFT);
 		}
 		else if(Gdx.input.isKeyPressed(Keys.RIGHT)) {
-			System.out.println("Player x = "+getPlayer().getPlayerPositionX());
-			System.out.println("Wall x = "+ WorldManager.RIGHT_WALL_WIDTH);
-			
 			getPlayer().setPosition(Player.RIGHT);
 		}
 		else if(Gdx.input.isKeyPressed(Keys.DOWN)) {

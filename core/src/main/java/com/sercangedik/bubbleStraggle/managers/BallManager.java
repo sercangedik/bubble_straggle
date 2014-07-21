@@ -34,6 +34,8 @@ public final class BallManager {
 		balls = new ArrayList<Ball>();
 	}
 	
+
+	
 	public static void shoot(Ball ball) throws CloneNotSupportedException {
 		GameManager.shootBall(ball);
 		ball.shoot();

@@ -46,7 +46,7 @@ public class Bullet {
 	private void move() {
 		_position.y += _moveSpeed * GameManager.getDelta();
 		
-		if(_position.y >= WorldManager.getCamera().viewportHeight) {
+		if(_position.y + _height >= WorldManager.getCamera().viewportHeight) {
 			_isFired = false;
 		}
 	}
@@ -72,8 +72,7 @@ public class Bullet {
 	}
 	
 	public void remove(){
-		_position.x = -10;
-		_position.y = -10;
+		_position.y = WorldManager.getCamera().viewportHeight;
 	}
 	
 	
