@@ -20,12 +20,12 @@ public final class WorldManager {
 	public static float LEFT_WALL_Y = getCamera().viewportHeight;
 	public static float LEFT_WALL_WIDTH = 10.0f;
 	public static float LEFT_WALL_HEIGHT = getCamera().viewportHeight - BOTTOM_WALL_Y - BOTTOM_WALL_HEIGHT;
-	public static float LEFT_WALL_X = LEFT_WALL_WIDTH;//adamin max gitmesi gereken
+	public static float LEFT_WALL_X = LEFT_WALL_WIDTH;
 	
 	public static float RIGHT_WALL_Y = getCamera().viewportHeight;
 	public static float RIGHT_WALL_WIDTH = 10.0f;
 	public static float RIGHT_WALL_HEIGHT = getCamera().viewportHeight - BOTTOM_WALL_Y - BOTTOM_WALL_HEIGHT;
-	public static float RIGHT_WALL_X = getCamera().viewportWidth - RIGHT_WALL_WIDTH;//adamin max gitmesi gereken
+	public static float RIGHT_WALL_X = getCamera().viewportWidth - RIGHT_WALL_WIDTH;
 	
 	public static short GROUP_WALL = 1;
 	public static short GROUP_BALL = -2;

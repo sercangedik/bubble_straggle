@@ -1,5 +1,8 @@
 package com.sercangedik.bubbleStraggle.objects;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -20,6 +23,7 @@ public class Ball {
 	private float _restitution;
 	private Body _body;
 	private BodyDef _bodyDef;
+	private Sprite ballSprite;
 	
 	public Ball(int level) {
 		this(level,new Vector2(0.0f,0.0f));
@@ -104,7 +108,9 @@ public class Ball {
 		addEffect(effect);
 		
 		_body.createFixture(fixtureDef);
-		shape.dispose();
+		
+		ballSprite = new Sprite(new Texture(Gdx.files.internal("images/ball.png")));
+		_body.setUserData(ballSprite);
 	}
 	
 	public void show() {
