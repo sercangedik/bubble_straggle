@@ -159,6 +159,9 @@ public static float getDelta() {
 			getPlayer().setPosition(Player.LEFT);
 		}
 		else if(Gdx.input.isKeyPressed(Keys.RIGHT)) {
+			System.out.println("Player x = "+getPlayer().getPlayerPositionX());
+			System.out.println("Wall x = "+ WorldManager.RIGHT_WALL_WIDTH);
+			
 			getPlayer().setPosition(Player.RIGHT);
 		}
 		else if(Gdx.input.isKeyPressed(Keys.DOWN)) {

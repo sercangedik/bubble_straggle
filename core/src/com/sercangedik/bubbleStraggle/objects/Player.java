@@ -106,6 +106,10 @@ public class Player {
 		return _position.x + _width / 2;
 	}
 	
+	public float getPlayerPositionX(){
+		return _position.x;
+	}
+	
 	public void setMoveSpeed(float moveSpeed) {
 		_moveSpeed = moveSpeed;
 	}
@@ -117,12 +121,16 @@ public class Player {
 		checkOverlaps();
 		
 		if(Gdx.input.isKeyPressed(Keys.A) || Gdx.input.getAccelerometerY() < 0){
-			move(Player.MOVE_LEFT);
-			_animation = new Animation(0.10f, _frames[1]);
+			if(WorldManager.LEFT_WALL_X + 5f < GameManager.getPlayer().getPlayerPositionX()){
+				move(Player.MOVE_LEFT);
+				_animation = new Animation(0.10f, _frames[1]);
+			}
 		}
 		else if(Gdx.input.isKeyPressed(Keys.D) ||  Gdx.input.getAccelerometerY() > 0){
-			move(Player.MOVE_RIGHT);
-			_animation = new Animation(0.10f, _frames[2]);
+			if(WorldManager.RIGHT_WALL_X - 40f > GameManager.getPlayer().getPlayerPositionX()){
+				move(Player.MOVE_RIGHT);
+				_animation = new Animation(0.10f, _frames[2]);
+			}
 		}
 		else {
 			if(_direction != STAND)
