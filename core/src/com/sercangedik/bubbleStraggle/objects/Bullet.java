@@ -59,6 +59,7 @@ public class Bullet {
 		
 		if((ball = BallManager.checkOverlaps(playerRectangle)) != null)
 			try {
+				remove();
 				BallManager.shoot(ball);
 			} catch (CloneNotSupportedException e) {
 				e.printStackTrace();
@@ -70,17 +71,20 @@ public class Bullet {
 		this._moveSpeed = _moveSpeed;
 	}
 	
+	public void remove(){
+		_position.x = -10;
+		_position.y = -10;
+	}
+	
 	
 
 	public void controlHandler(SpriteBatch batch) {
 		if(Gdx.input.isKeyPressed(Keys.SPACE) || Gdx.input.isTouched()) {
 			fire();
 		}
-		
 		if(_isFired) {
 			move();
-			batch.draw(_texture, _position.x, _position.y+60);
-			
+			batch.draw(_texture, _position.x, _position.y+60);	
 			checkOverlaps();
 		}
 	}
