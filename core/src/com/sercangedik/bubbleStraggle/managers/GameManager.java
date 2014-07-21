@@ -19,6 +19,18 @@ public final class GameManager {
 	protected static float _currentFrameTime = 0;
 	protected static float _gamePoint = 0;
 	
+	private static float scaling = (float) 1.2;
+	private static Texture wallTexture;
+	private static Sprite wallSprite;
+	private static Texture pointTexture;
+	private static Sprite pointSprite;	
+	private static BitmapFont font;
+	private static Texture liveTexture;
+	private static Sprite liveSprite;
+	private static Texture headTexture;
+	private static Sprite headSprite;
+	
+	
 	public static Player getPlayer() {
 		if(_player == null) {
 			_player = new Player(Gdx.files.internal("images/man.png"),Player.CENTER);
@@ -35,7 +47,7 @@ public final class GameManager {
 		return _bullet;
 	}
 
-	public static float getDelta() {
+public static float getDelta() {
 		return _delta;
 	}
 
@@ -82,44 +94,48 @@ public final class GameManager {
 		_player = new Player(Gdx.files.internal("images/man.png"),Player.CENTER);
 	}
 	
-	public static void renderGame(SpriteBatch batch) {
-		float scaling = (float) 1.2;
+	public static void getTextures(){
 		
 		//Walls
-		Texture wallTexture = new Texture("images/wall.jpg");
-		Sprite wallSprite = new Sprite(wallTexture);
-		
-	    //wallSprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-	  	wallSprite.draw(batch);
-	    
+		wallTexture = new Texture("images/wall.jpg");
+		wallSprite = new Sprite(wallTexture);
 		
 		//Score
-		Texture pointTexture = new Texture("images/puantablosu.png");
-		Sprite pointSprite = new Sprite(pointTexture);
-		BitmapFont font = new BitmapFont();
-		
+		pointTexture = new Texture("images/puantablosu.png");
+		pointSprite = new Sprite(pointTexture);	
+		font = new BitmapFont();
+				
 		pointSprite.setPosition(490, 5);
 		pointSprite.setScale(scaling);
-		pointSprite.draw(batch);
-
+		
 		font.scale((float) 1.05);
 		font.setColor(0.0f, 0.0f, 0.0f, 1.0f);
-		font.draw(batch, Float.toString(getGamePoint()), 500, 45);
 		
 		//Live
-		Texture liveTexture = new Texture("images/can.png");
-		Sprite liveSprite = new Sprite(liveTexture);
-		
+		liveTexture = new Texture("images/can.png");
+		liveSprite = new Sprite(liveTexture);
+				
 		liveSprite.setPosition(20, 5);
 		liveSprite.setScale(scaling);
-		liveSprite.draw(batch);
 		
-		Texture headTexture = new Texture("images/head.png");
-		Sprite headSprite;
+		headTexture = new Texture("images/head.png");
+		headSprite = new Sprite(headTexture);
+		headSprite.scale(1.05f);
+
+	}
+	
+	public static void renderGame(SpriteBatch batch) {
+	
+	    //wallSprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+	  	wallSprite.draw(batch);
+		pointSprite.draw(batch);
+
+		font.draw(batch, Float.toString(getGamePoint()), 500, 45);
+		liveSprite.draw(batch);
+
 		
 		for (int i = 0; i < getPlayer().getLives(); i++) {
-			headSprite = new Sprite(headTexture);
-			headSprite.scale(1.05f);
+	
 			headSprite.setPosition(30 * (i+1) + i * 10, 25);
 			headSprite.draw(batch);
 		}
