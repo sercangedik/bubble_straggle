@@ -27,17 +27,17 @@ public final class GameManager {
 	private static int _gameLevel = 1;
 	private static float _gameLevelTime;
 	
-	private static Array<Body> bodies = new Array<Body>();
-	private static float scaling = (float) 1.2;
-	private static Texture wallTexture;
-	private static Sprite wallSprite;
-	private static Texture pointTexture;
-	private static Sprite pointSprite;	
-	private static BitmapFont font;
-	private static Texture liveTexture;
-	private static Sprite liveSprite;
-	private static Texture headTexture;
-	private static Sprite headSprite;
+	private static Array<Body> _bodies = new Array<Body>();
+	private static float _scaling = (float) 1.2;
+	private static Texture _wallTexture;
+	private static Sprite _wallSprite;
+	private static Texture _pointTexture;
+	private static Sprite _pointSprite;	
+	private static BitmapFont _font;
+	private static Texture _liveTexture;
+	private static Sprite _liveSprite;
+	private static Texture _headTexture;
+	private static Sprite _headSprite;
 	
 	
 	
@@ -122,37 +122,37 @@ public final class GameManager {
 	public static void getTextures(){
 		
 		//Walls
-		wallTexture = new Texture("images/wall.jpg");
-		wallSprite = new Sprite(wallTexture);
+		_wallTexture = new Texture("images/wall.jpg");
+		_wallSprite = new Sprite(_wallTexture);
 		
 		//Score
-		pointTexture = new Texture("images/puantablosu.png");
-		pointSprite = new Sprite(pointTexture);	
-		font = new BitmapFont();
+		_pointTexture = new Texture("images/puantablosu.png");
+		_pointSprite = new Sprite(_pointTexture);	
+		_font = new BitmapFont();
 				
-		pointSprite.setPosition(490, 5);
-		pointSprite.setScale(scaling);
+		_pointSprite.setPosition(490, 5);
+		_pointSprite.setScale(_scaling);
 		
-		font.scale((float) 1.05);
-		font.setColor(0.0f, 0.0f, 0.0f, 1.0f);
+		_font.scale((float) 1.05);
+		_font.setColor(0.0f, 0.0f, 0.0f, 1.0f);
 		
 		//Live
-		liveTexture = new Texture("images/can.png");
-		liveSprite = new Sprite(liveTexture);
+		_liveTexture = new Texture("images/can.png");
+		_liveSprite = new Sprite(_liveTexture);
 				
-		liveSprite.setPosition(20, 5);
-		liveSprite.setScale(scaling);
+		_liveSprite.setPosition(20, 5);
+		_liveSprite.setScale(_scaling);
 		
-		headTexture = new Texture("images/head.png");
-		headSprite = new Sprite(headTexture);
-		headSprite.scale(1.05f);
+		_headTexture = new Texture("images/head.png");
+		_headSprite = new Sprite(_headTexture);
+		_headSprite.scale(1.05f);
 
 	}
 	
 	public static void renderTimerBar() {
 		ShapeRenderer shapes = new ShapeRenderer();
 	    shapes.begin(ShapeType.Filled);
-	    shapes.setColor(Color.RED);
+	    shapes.setColor(Color.GREEN);
 	    shapes.rect(12, WorldManager.BOTTOM_WALL_HEIGHT * 2-7, WorldManager.getCamera().viewportWidth*_gameLevelTime/DEFAULT_TIMER-20, 5);
 	    
 	    shapes.end();
@@ -165,20 +165,20 @@ public final class GameManager {
 			getPlayer().crash();
 		
 	    //wallSprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-	  	wallSprite.draw(batch);
-		pointSprite.draw(batch);
+	  	_wallSprite.draw(batch);
+		_pointSprite.draw(batch);
 
-		font.draw(batch, Float.toString(getGamePoint()), 500, 45);
-		liveSprite.draw(batch);
+		_font.draw(batch, Float.toString(getGamePoint()), 500, 45);
+		_liveSprite.draw(batch);
 
 		
 		for (int i = 0; i < getPlayer().getLives(); i++) {
-			headSprite.setPosition(30 * (i+1) + i * 10, 25);
-			headSprite.draw(batch);
+			_headSprite.setPosition(30 * (i+1) + i * 10, 25);
+			_headSprite.draw(batch);
 		}
 		
-		WorldManager.world.getBodies(bodies);
-		for(Body body : bodies)
+		WorldManager.world.getBodies(_bodies);
+		for(Body body : _bodies)
 			if(body.getUserData() != null && body.getUserData() instanceof Sprite){
 				Sprite sprite = (Sprite) body.getUserData();
 				sprite.setPosition(body.getPosition().x-(16f), body.getPosition().y-(16f));
