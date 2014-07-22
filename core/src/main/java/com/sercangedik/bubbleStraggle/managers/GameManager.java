@@ -9,7 +9,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Array;
 import com.sercangedik.bubbleStraggle.objects.Ball;
@@ -17,7 +16,7 @@ import com.sercangedik.bubbleStraggle.objects.Bullet;
 import com.sercangedik.bubbleStraggle.objects.Player;
 
 public final class GameManager {
-	public final static int DEFAULT_TIMER = 10;
+	public final static int DEFAULT_TIMER = 30;
 	
 	protected static Player _player = null;
 	protected static Bullet _bullet = null;
@@ -167,6 +166,7 @@ public final class GameManager {
 		
 	  	_wallSprite.draw(batch);
 		_pointSprite.draw(batch);
+		BallManager.renderBalls(batch);
 
 		_font.draw(batch, Float.toString(getGamePoint()), 500, 45);
 		_liveSprite.draw(batch);
@@ -176,16 +176,6 @@ public final class GameManager {
 			_headSprite.setPosition(30 * (i+1) + i * 10, 25);
 			_headSprite.draw(batch);
 		}
-		
-		WorldManager.world.getBodies(_bodies);
-		for(Body body : _bodies)
-			if(body.getUserData() != null && body.getUserData() instanceof Sprite){
-				Sprite sprite = (Sprite) body.getUserData();
-				sprite.setPosition(body.getPosition().x-(16f), body.getPosition().y-(16f));
-				if(BallManager.getBallLevel() == 1)
-					sprite.setScale(0.5f);
-				sprite.draw(batch);				
-			}
 		
 		//tricks (:
 		if(Gdx.input.isKeyPressed(Keys.NUM_0)){

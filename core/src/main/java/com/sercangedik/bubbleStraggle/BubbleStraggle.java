@@ -56,7 +56,7 @@ public class BubbleStraggle extends ApplicationAdapter {
 		
 		GameManager.renderTimerBar();
 		
-		debugRenderer.render(WorldManager.world, WorldManager.getCamera().combined);
+		//debugRenderer.render(WorldManager.world, WorldManager.getCamera().combined);
 	}
 	
 	@Override

@@ -3,6 +3,7 @@ package com.sercangedik.bubbleStraggle.objects;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -23,7 +24,7 @@ public class Ball {
 	private float _restitution;
 	private Body _body;
 	private BodyDef _bodyDef;
-	private Sprite ballSprite;
+	private Sprite _ballSprite;
 	
 	public Ball(int level) {
 		this(level,new Vector2(0.0f,0.0f));
@@ -61,17 +62,17 @@ public class Ball {
 	}
 	
 	public float getWidth() {
-		return _level*20/2;
+		return _level*17/2;
 	}
 	
 	public float getHeight() {
-		return _level*20/2;
+		return _level*17/2;
 	}
 
 	public int getLevel() {
 		return _level;
 	}
-	
+
 	protected void addEffect(int effect) {
 		if(effect == EFFECT_DROP) {
 			if(_position.x <= WorldManager.getCamera().viewportWidth / 2)
@@ -109,8 +110,13 @@ public class Ball {
 		
 		_body.createFixture(fixtureDef);
 		
-		ballSprite = new Sprite(new Texture(Gdx.files.internal("images/ball.png")));
-		_body.setUserData(ballSprite);
+		_ballSprite = new Sprite(new Texture(Gdx.files.internal("images/ball.png")));
+	}
+	
+	public void render(SpriteBatch batch) {
+		_ballSprite.setPosition(getPosition().x-(16f), getPosition().y-(16f));
+		_ballSprite.setScale((float)_level/2);
+		_ballSprite.draw(batch);
 	}
 	
 	public void show() {

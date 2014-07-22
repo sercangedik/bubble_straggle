@@ -3,6 +3,7 @@ package com.sercangedik.bubbleStraggle.managers;
 import java.util.ArrayList;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.sercangedik.bubbleStraggle.objects.Ball;
@@ -10,7 +11,7 @@ import com.sercangedik.bubbleStraggle.objects.Ball;
 public final class BallManager {
 	
 	public static ArrayList<Ball> balls = new ArrayList<Ball>();
-	private static int _level=0;
+	public static ArrayList<Ball> miniBalls = new ArrayList<Ball>();
 	
 	public static void restart(int count, int level) {
 		balls = new ArrayList<Ball>();
@@ -37,13 +38,9 @@ public final class BallManager {
 	
 	public static void clean() {
 		balls = new ArrayList<Ball>();
+		miniBalls = new ArrayList<Ball>();
 	}
 	
-	public static int getBallLevel() {
-		return _level;
-	}
-	
-
 	
 	public static void shoot(Ball ball) throws CloneNotSupportedException {
 		GameManager.shootBall(ball);
@@ -54,26 +51,30 @@ public final class BallManager {
 			
 			if(balls.size() == 0)
 				GameManager.startNextLevel();
-			
 			return;
 		}
 		
-		_level = ball.getLevel() - 1;
+		
 		float density = ball.getDensity();
 		float friction = ball.getFriction();
 		float restitution = ball.getRestitution();
 		Vector2 position = ball.getPosition();
 		
-		Ball ball1 = new Ball(_level, density, friction, restitution, position);
-		Ball ball2 = new Ball(_level, density, friction, restitution, position);
+		balls.remove(ball);
+		
+		Ball ball1 = new Ball(1, density, friction, restitution, position);
+		Ball ball2 = new Ball(1, density, friction, restitution, position);
 		
 		balls.add(ball1);
 		balls.add(ball2);
 		
+		miniBalls.add(ball1);
+		miniBalls.add(ball2);
+		
 		ball1.show(Ball.EFFECT_BLOW_UP_LEFT);
 		ball2.show(Ball.EFFECT_BLOW_UP_RIGHT);
 		
-		balls.remove(ball);
+
 	}
 	
 	private static boolean overlaps(Ball ball, Rectangle rectangle) {
@@ -92,5 +93,11 @@ public final class BallManager {
 		}
 		
 		return null;
+	}
+	
+	public static void renderBalls(SpriteBatch batch) {
+		for(Ball ball : balls){
+			ball.render(batch);
+		}
 	}
 }
