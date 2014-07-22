@@ -68,6 +68,7 @@ public final class GameManager {
 		return _delta;
 	}
 	
+	
 	public static int getGameLevel() {
 		return _gameLevel;
 	}
@@ -164,7 +165,6 @@ public final class GameManager {
 		if(_gameLevelTime >= DEFAULT_TIMER)
 			getPlayer().crash();
 		
-	    //wallSprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	  	_wallSprite.draw(batch);
 		_pointSprite.draw(batch);
 
@@ -182,7 +182,8 @@ public final class GameManager {
 			if(body.getUserData() != null && body.getUserData() instanceof Sprite){
 				Sprite sprite = (Sprite) body.getUserData();
 				sprite.setPosition(body.getPosition().x-(16f), body.getPosition().y-(16f));
-				sprite.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
+				if(BallManager.getBallLevel() == 1)
+					sprite.setScale(0.5f);
 				sprite.draw(batch);				
 			}
 		

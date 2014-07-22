@@ -8,7 +8,9 @@ import com.badlogic.gdx.math.Vector2;
 import com.sercangedik.bubbleStraggle.objects.Ball;
 
 public final class BallManager {
+	
 	public static ArrayList<Ball> balls = new ArrayList<Ball>();
+	private static int _level=0;
 	
 	public static void restart(int count, int level) {
 		balls = new ArrayList<Ball>();
@@ -37,6 +39,10 @@ public final class BallManager {
 		balls = new ArrayList<Ball>();
 	}
 	
+	public static int getBallLevel() {
+		return _level;
+	}
+	
 
 	
 	public static void shoot(Ball ball) throws CloneNotSupportedException {
@@ -52,14 +58,14 @@ public final class BallManager {
 			return;
 		}
 		
-		int level = ball.getLevel() - 1;
+		_level = ball.getLevel() - 1;
 		float density = ball.getDensity();
 		float friction = ball.getFriction();
 		float restitution = ball.getRestitution();
 		Vector2 position = ball.getPosition();
 		
-		Ball ball1 = new Ball(level, density, friction, restitution, position);
-		Ball ball2 = new Ball(level, density, friction, restitution, position);
+		Ball ball1 = new Ball(_level, density, friction, restitution, position);
+		Ball ball2 = new Ball(_level, density, friction, restitution, position);
 		
 		balls.add(ball1);
 		balls.add(ball2);
