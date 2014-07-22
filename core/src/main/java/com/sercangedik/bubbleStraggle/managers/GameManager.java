@@ -190,10 +190,10 @@ public final class GameManager {
 		else if(Gdx.input.isKeyPressed(Keys.R)) {
 			restart();
 		}
-		else if(Gdx.input.isKeyPressed(Keys.LEFT)) {
+		else if(Gdx.input.isKeyPressed(Keys.A)) {
 			getPlayer().setPosition(Player.LEFT);
 		}
-		else if(Gdx.input.isKeyPressed(Keys.RIGHT)) {
+		else if(Gdx.input.isKeyPressed(Keys.D)) {
 			getPlayer().setPosition(Player.RIGHT);
 		}
 		else if(Gdx.input.isKeyPressed(Keys.DOWN)) {

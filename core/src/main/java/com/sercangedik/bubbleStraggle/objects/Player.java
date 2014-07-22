@@ -137,13 +137,13 @@ public class Player {
 		
 		checkOverlaps();
 		
-		if(Gdx.input.isKeyPressed(Keys.A) || Gdx.input.getAccelerometerY() < 0){
+		if(Gdx.input.isKeyPressed(Keys.LEFT) || Gdx.input.getAccelerometerY() < 0){
 			if(WorldManager.LEFT_WALL_X + 5f < GameManager.getPlayer().getPlayerPositionX()){
 				move(Player.MOVE_LEFT);
 				_animation = new Animation(0.10f, _frames[1]);
 			}
 		}
-		else if(Gdx.input.isKeyPressed(Keys.D) ||  Gdx.input.getAccelerometerY() > 0){
+		else if(Gdx.input.isKeyPressed(Keys.RIGHT) ||  Gdx.input.getAccelerometerY() > 0){
 			if(WorldManager.RIGHT_WALL_X - 40f > GameManager.getPlayer().getPlayerPositionX()){
 				move(Player.MOVE_RIGHT);
 				_animation = new Animation(0.10f, _frames[2]);
