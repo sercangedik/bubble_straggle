@@ -13,12 +13,17 @@
  * Çeşitli ses efektleri
  * Çeşitli grafikler
  * Saniye barı ve animasyonu
+ 
+ **Yön Tuşları**
+ 
+ * Sağ - Sol yön tuşlarıyla oyuncuyu hareket ettirebilirsiniz.
+ * Space tuşuyla toplara ateş edebilirsiniz.
 
 
 **Bazı trickler :** 
 
 * R harfine basılınca oyunun yeniden başlatılması
-* Sol-Sağ oka basılınca oyuncunun sol-sağ duvarın dibinde belirmesi
+* A - D basılınca oyuncunun sol-sağ duvarın dibinde belirmesi
 * Aşağı oka basılınca oyuncunun ortada belirmesi
 * 0'a basılınca topun otomatik vurulması
 * 1'e basılınca yeni topun oluşturulması
