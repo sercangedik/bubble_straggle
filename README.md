@@ -47,7 +47,7 @@ Oyunun kodlanma aşamasında genel itibariyle singleton pattern'i kullanılmış
  Player,Ball ve Bullet objeleri genel olarak oyunun sahnesinde bulunan ve etkileşim içerisinde olan özellikleri içerir.
  Managerlar ise bu objelerin dünya ile olan etkileşimini sağlarlar. Bu sayede daha soyut bir yapı oluşturularak yeni özelliklere daha uyumlu hale getirilmiştir.
  
-**Faydanılan Kaynaklar:**
+**Kaynaklar:**
 
 [Box 2d Tutorial](https://github.com/libgdx/libgdx/wiki/Box2d)
 
