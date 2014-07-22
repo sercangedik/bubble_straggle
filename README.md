@@ -14,7 +14,7 @@
  * Çeşitli grafikler
  * Saniye barı ve animasyonu
  
- **Yön Tuşları**
+**Yön Tuşları**
  
  * Sağ - Sol yön tuşlarıyla oyuncuyu hareket ettirebilirsiniz.
  * Space tuşuyla toplara ateş edebilirsiniz.
