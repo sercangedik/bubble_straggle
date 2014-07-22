@@ -3,7 +3,7 @@
 
 # Peak Games - Bubble Struggle
 
-**Oyunun Özellikleri : **
+**Oyunun Özellikleri :**
 
  * 3 adet can hakkı
  * Vurulan topa göre puan kazanımı
@@ -47,13 +47,14 @@ Oyunun kodlanma aşamasında genel itibariyle singleton pattern'i kullanılmış
  Player,Ball ve Bullet objeleri genel olarak oyunun sahnesinde bulunan ve etkileşim içerisinde olan özellikleri içerir.
  Managerlar ise bu objelerin dünya ile olan etkileşimini sağlarlar. Bu sayede daha soyut bir yapı oluşturularak yeni özelliklere daha uyumlu hale getirilmiştir.
  
-** Kaynaklar:**
+**Faydanılan Kaynaklar:**
 
 [Box 2d Tutorial](https://github.com/libgdx/libgdx/wiki/Box2d)
 
 [LibGdx Setup for Eclipse](https://github.com/libgdx/libgdx/wiki/Project-setup%2C-running-%26-debugging)
 
 [Stackoverflow](http://stackoverflow.com/search?q=libgdx)
+ 
  
  
  
