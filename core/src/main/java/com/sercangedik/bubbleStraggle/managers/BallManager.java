@@ -16,18 +16,21 @@ public final class BallManager {
 	}
 	
 	public static void createBalls(int count,int level) {
-		Ball ball;
 		float positionStep = Gdx.graphics.getWidth() / (count+1);
 		float positionX = 0;
 		
 		for (int i = 0; i < count; i++) {
 			positionX += positionStep;
 			Vector2 position = new Vector2(positionX, Gdx.graphics.getHeight() - 150);
-			ball = new Ball(level, position);
-			
-			balls.add(ball);
-			ball.show();
+			createBall(level, position);
 		}
+	}
+	
+	public static void createBall(int level, Vector2 position) {
+		Ball ball = new Ball(level, position);
+		
+		balls.add(ball);
+		ball.show();
 	}
 	
 	public static void clean() {
@@ -42,6 +45,10 @@ public final class BallManager {
 		
 		if(ball.getLevel() == 1) {
 			balls.remove(ball);
+			
+			if(balls.size() == 0)
+				GameManager.startNextLevel();
+			
 			return;
 		}
 		

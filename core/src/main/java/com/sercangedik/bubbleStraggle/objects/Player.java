@@ -22,6 +22,8 @@ public class Player {
 	public static int CENTER = 0;
 	public static int RIGHT = 1;
 	
+	public final static int DEFAULT_LIVE = 3;
+	
 	protected Animation _animation;
 	protected TextureRegion[][] _frames;
 	protected int _width;
@@ -30,7 +32,7 @@ public class Player {
 	protected Vector2 _position;
 	protected float _moveSpeed;
 	protected int _direction = STAND;
-	protected int _live = 3;
+	protected int _live = DEFAULT_LIVE;
 	
 	public Player(FileHandle fileHandle) {
 		this(fileHandle,0,0);
@@ -50,6 +52,14 @@ public class Player {
 		_width = _texture.getWidth() / 3;
 		_height = _texture.getHeight() / 4;
 		_position = new Vector2(x,y);
+	}
+	
+	public int getHeight() {
+		return _height;
+	}
+	
+	public int getWidth() {
+		return _width;
 	}
 	
 	public void setPosition(int position) {
@@ -85,11 +95,18 @@ public class Player {
 			born();
 	}
 	
-	private void checkOverlaps() {
+	public boolean isCrashed() {
 		Rectangle playerRectangle = new Rectangle();
 		playerRectangle.set(_position.x, _position.y, _width, _height);
 		
 		if(BallManager.checkOverlaps(playerRectangle) != null)
+			return true;
+		else
+			return false;
+	}
+	
+	private void checkOverlaps() {
+		if(isCrashed())
 			crash();
 	}
 	
@@ -142,6 +159,10 @@ public class Player {
 	}
 	
 	public void born() {
-		setPosition(CENTER);
+		GameManager.restartLevel();
+	}
+	
+	public void clean() {
+		_live = DEFAULT_LIVE;
 	}
 }

@@ -2,10 +2,13 @@ package com.sercangedik.bubbleStraggle.managers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.utils.Array;
@@ -14,11 +17,15 @@ import com.sercangedik.bubbleStraggle.objects.Bullet;
 import com.sercangedik.bubbleStraggle.objects.Player;
 
 public final class GameManager {
+	public final static int DEFAULT_TIMER = 10;
+	
 	protected static Player _player = null;
 	protected static Bullet _bullet = null;
 	protected static float _delta = 0;
 	protected static float _currentFrameTime = 0;
 	protected static float _gamePoint = 0;
+	private static int _gameLevel = 1;
+	private static float _gameLevelTime;
 	
 	private static Array<Body> bodies = new Array<Body>();
 	private static float scaling = (float) 1.2;
@@ -33,6 +40,7 @@ public final class GameManager {
 	private static Sprite headSprite;
 	
 	
+	
 	public static Player getPlayer() {
 		if(_player == null) {
 			_player = new Player(Gdx.files.internal("images/man.png"),Player.CENTER);
@@ -40,7 +48,7 @@ public final class GameManager {
 		
 		return _player;
 	}
-	
+
 	public static Bullet getBullet() {
 		if(_bullet == null) {
 			_bullet = new Bullet(Gdx.files.internal("images/bullet.png"),0,WorldManager.BOTTOM_WALL_HEIGHT);
@@ -49,7 +57,7 @@ public final class GameManager {
 		return _bullet;
 	}
 
-public static float getDelta() {
+	public static float getDelta() {
 		return _delta;
 	}
 
@@ -58,6 +66,10 @@ public static float getDelta() {
 		_currentFrameTime += _delta;
 		
 		return _delta;
+	}
+	
+	public static int getGameLevel() {
+		return _gameLevel;
 	}
 
 	public static float getCurrentFrameTime() {
@@ -82,19 +94,29 @@ public static float getDelta() {
 		restart();
 	}
 	
-	
 	public static void restart() {
-		Array<Body> bodies = new Array<Body>();
-		WorldManager.world.getBodies(bodies);
+		_gameLevel = 1;
 		
-		for (Body body : bodies) {
-			WorldManager.world.destroyBody(body);
-		}
+		restartLevel();
 		
-		WorldManager.restart();
-		BallManager.restart(3, 2);
 		_gamePoint = 0;
 		_player = new Player(Gdx.files.internal("images/man.png"),Player.CENTER);
+	}
+	
+	public static void restartLevel() {
+		startLevel(_gameLevel);
+		getPlayer().setPosition(Player.CENTER);
+	}
+	
+	public static void startNextLevel() {
+		startLevel(++_gameLevel);
+	}
+	
+	public static void startLevel(int gameLevel) {
+		WorldManager.restart();
+		BallManager.restart(gameLevel, 2);
+		
+		_gameLevelTime = 0;
 	}
 	
 	public static void getTextures(){
@@ -127,8 +149,21 @@ public static float getDelta() {
 
 	}
 	
-	public static void renderGame(SpriteBatch batch) {
+	public static void renderTimerBar() {
+		ShapeRenderer shapes = new ShapeRenderer();
+	    shapes.begin(ShapeType.Filled);
+	    shapes.setColor(Color.RED);
+	    shapes.rect(0, WorldManager.BOTTOM_WALL_HEIGHT * 2, WorldManager.getCamera().viewportWidth*_gameLevelTime/DEFAULT_TIMER, 10);
+	    
+	    shapes.end();
+	}
 	
+	public static void renderGame(SpriteBatch batch) {
+		_gameLevelTime += getDelta();
+		
+		if(_gameLevelTime >= DEFAULT_TIMER)
+			getPlayer().crash();
+		
 	    //wallSprite.setSize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 	  	wallSprite.draw(batch);
 		pointSprite.draw(batch);
@@ -138,7 +173,6 @@ public static float getDelta() {
 
 		
 		for (int i = 0; i < getPlayer().getLives(); i++) {
-	
 			headSprite.setPosition(30 * (i+1) + i * 10, 25);
 			headSprite.draw(batch);
 		}
@@ -151,8 +185,6 @@ public static float getDelta() {
 				sprite.setRotation(body.getAngle() * MathUtils.radiansToDegrees);
 				sprite.draw(batch);				
 			}
-		
-		
 		
 		//tricks (:
 		if(Gdx.input.isKeyPressed(Keys.NUM_0)){
@@ -181,6 +213,9 @@ public static float getDelta() {
 		}
 		else if(Gdx.input.isKeyPressed(Keys.NUM_2)) {
 			getPlayer().crash();
+		}
+		else if(Gdx.input.isKeyPressed(Keys.NUM_3)) {
+			startNextLevel();
 		}
 	}
 }
