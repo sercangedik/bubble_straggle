@@ -153,7 +153,7 @@ public final class GameManager {
 		ShapeRenderer shapes = new ShapeRenderer();
 	    shapes.begin(ShapeType.Filled);
 	    shapes.setColor(Color.RED);
-	    shapes.rect(0, WorldManager.BOTTOM_WALL_HEIGHT * 2, WorldManager.getCamera().viewportWidth*_gameLevelTime/DEFAULT_TIMER, 10);
+	    shapes.rect(12, WorldManager.BOTTOM_WALL_HEIGHT * 2-7, WorldManager.getCamera().viewportWidth*_gameLevelTime/DEFAULT_TIMER-20, 5);
 	    
 	    shapes.end();
 	}
