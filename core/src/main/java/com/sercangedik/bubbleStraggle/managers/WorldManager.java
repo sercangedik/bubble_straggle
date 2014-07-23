@@ -38,7 +38,7 @@ public final class WorldManager {
 			//@TODO: dynamic camera sizing
 			
 			_camera = new OrthographicCamera();  
-			switch (Gdx.app.getType()) {
+			/*switch (Gdx.app.getType()) {
 			case Android:
 				_camera.viewportHeight = Gdx.graphics.getHeight();  
 				_camera.viewportWidth = Gdx.graphics.getWidth();
@@ -49,9 +49,11 @@ public final class WorldManager {
 				break;
 			default:
 				break;
-			}
-			  
-			_camera.position.set(_camera.viewportWidth * .5f, _camera.viewportHeight * .5f, 0f);  
+			}*/
+			
+			_camera.viewportHeight =  Gdx.graphics.getHeight();  
+			_camera.viewportWidth = Gdx.graphics.getWidth();
+			_camera.position.set(_camera.viewportWidth * .5f, _camera.viewportHeight * .5f, 2f);  
 			_camera.update();  
 		}
 		
@@ -88,6 +90,8 @@ public final class WorldManager {
 	
 	public static void clean() {
 		Array<Body> bodies = new Array<Body>();
+		
+		
 		WorldManager.world.getBodies(bodies);
 		
 		for (Body body : bodies) {

@@ -24,7 +24,7 @@ public final class BallManager {
 		
 		for (int i = 0; i < count; i++) {
 			positionX += positionStep;
-			Vector2 position = new Vector2(positionX, Gdx.graphics.getHeight() - 150);
+			Vector2 position = new Vector2(positionX, Gdx.graphics.getHeight() * 0.5f);
 			createBall(level, position);
 		}
 	}

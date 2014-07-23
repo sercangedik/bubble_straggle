@@ -37,6 +37,7 @@ public final class GameManager {
 	private static Sprite _liveSprite;
 	private static Texture _headTexture;
 	private static Sprite _headSprite;
+	private static ShapeRenderer _shapes = new ShapeRenderer();
 	
 	
 	
@@ -120,10 +121,11 @@ public final class GameManager {
 	}
 	
 	public static void getTextures(){
-		
+
 		//Walls
 		_wallTexture = new Texture("images/wall.jpg");
 		_wallSprite = new Sprite(_wallTexture);
+
 		
 		//Score
 		_pointTexture = new Texture("images/puantablosu.png");
@@ -150,12 +152,12 @@ public final class GameManager {
 	}
 	
 	public static void renderTimerBar() {
-		ShapeRenderer shapes = new ShapeRenderer();
-	    shapes.begin(ShapeType.Filled);
-	    shapes.setColor(Color.GREEN);
-	    shapes.rect(12, WorldManager.BOTTOM_WALL_HEIGHT * 2-7, WorldManager.getCamera().viewportWidth*_gameLevelTime/DEFAULT_TIMER-20, 5);
+		
+	    _shapes.begin(ShapeType.Filled);
+	    _shapes.setColor(Color.GREEN);
+	    _shapes.rect(12, WorldManager.BOTTOM_WALL_HEIGHT * 2-7, WorldManager.getCamera().viewportWidth*_gameLevelTime/DEFAULT_TIMER-20, 5);
 	    
-	    shapes.end();
+	    _shapes.end();
 	}
 	
 	public static void renderGame(SpriteBatch batch) {
