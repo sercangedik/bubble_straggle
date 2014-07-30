@@ -15,8 +15,6 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer.ShapeType;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.utils.Array;
 import com.sercangedik.bubbleStraggle.objects.Ball;
 import com.sercangedik.bubbleStraggle.objects.Bullet;
 import com.sercangedik.bubbleStraggle.objects.Player;
@@ -32,7 +30,6 @@ public final class GameManager {
 	private static int _gameLevel = 1;
 	private static float _gameLevelTime;
 	
-	private static Array<Body> _bodies = new Array<Body>();
 	private static float _scaling = (float) 1.2;
 	private static Texture _wallTexture;
 	private static Sprite _wallSprite;
