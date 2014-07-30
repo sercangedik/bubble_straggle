@@ -1,3 +1,9 @@
+/* Oyuncunun ates etmesi esnasinda gerceklesen olaylari
+ * kontrol eder. Merminin hareketi, carpismasi gibi durumlari 
+ * olusturur ve bazi durumlari ball manager (carpisma) sinifi ile 
+ * paylasarak oyunun senaryosunun ilerlemesini saglar.
+ * */
+
 package com.sercangedik.bubbleStraggle.objects;
 
 import com.badlogic.gdx.Gdx;

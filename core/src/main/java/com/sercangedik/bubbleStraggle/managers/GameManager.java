@@ -1,3 +1,9 @@
+/*
+ * Bu class genel itibari ile oyunun yonetimi, zamanin islenmesi
+ * oyuncunun durumu, trick tuslarinin dinlenmesi, texturelarin i/o 
+ * isleminin yapilmasini icerir.
+ * */
+
 package com.sercangedik.bubbleStraggle.managers;
 
 import com.badlogic.gdx.Gdx;

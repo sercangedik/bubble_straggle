@@ -1,3 +1,9 @@
+/*
+ * Bu class genel itibari ile oyunun dunyasinin olusturuldugu
+ * ornek : duvarlar, camera, yeniden olusturulma gibi. siniftir.
+ * Oyunun baslangicinda buyuk rol ustlenir.
+ * */
+
 package com.sercangedik.bubbleStraggle.managers;
 
 import com.badlogic.gdx.Gdx;

@@ -1,3 +1,9 @@
+/*
+ * Bu class toplarin hareketlerinin kontrolu,
+ * carpismanin farkedilmesi, toplarin olusturulmasi gibi olaylarin
+ * yonetilmesini ustlenir.
+ * */
+
 package com.sercangedik.bubbleStraggle.managers;
 
 import java.util.ArrayList;

@@ -1,3 +1,9 @@
+/*
+ * Oyundaki karakterin genel sinifidir. Getter,setter
+ * fonksiyonlari bulunur. Oyuncunun olusturulmasi, animasyonu,
+ * sag ve sol hareketleri, konumunun belirlenmesi gibi durumlari 
+ * olusturur ve kontrol eder. 
+ * */
 package com.sercangedik.bubbleStraggle.objects;
 
 import com.badlogic.gdx.Gdx;
