@@ -1,5 +1,5 @@
 ![alt tag](https://camo.githubusercontent.com/f70f169cab179f13f70e892b3251e6f2032be66d/687474703a2f2f6c69626764782e6261646c6f67696367616d65732e636f6d2f696d672f6c6f676f2e706e67)
-![alt tag](http://www.toged.org/wp-content/uploads/2014/12/peakGames.jpg)
+![alt tag](http://animationews.com/wp-content/uploads/2013/03/logo_w1.jpg)
 
 # Peak Games - Bubble Struggle
 
